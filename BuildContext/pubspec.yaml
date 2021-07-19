@@ -26,7 +26,10 @@ dependencies:
   bloc_test: ^8.0.2
   connectivity_plus: ^1.0.5
   cupertino_icons: ^1.0.2
+  equatable: ^2.0.3
   flutter_bloc: ^7.0.1
+  hydrated_bloc: ^7.0.1
+  path_provider: ^2.0.2
   test: null
 
 dev_dependencies:

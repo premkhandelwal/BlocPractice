@@ -83,19 +83,25 @@ class CounterText extends StatelessWidget {
 }
  */
 
-
 import 'package:bloc_practice/business_logic/cubit/counter_cubit.dart';
 import 'package:bloc_practice/business_logic/cubit/internet_cubit.dart';
+import 'package:bloc_practice/business_logic/utility/app_bloc_observer.dart';
 import 'package:bloc_practice/presentation/router/app_router.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
   runApp(MyApp(
     appRouter: AppRouter(),
     connectivity: Connectivity(),
   ));
+  Bloc.observer = AppBLocObserver();
 }
 
 class MyApp extends StatelessWidget {
@@ -109,9 +115,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<InternetCubit>(
             create: (context) => InternetCubit(connectivity: connectivity)),
-        BlocProvider<CounterCubit>(
-            create: (ctx) =>
-                CounterCubit()),
+        BlocProvider<CounterCubit>(create: (ctx) => CounterCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
